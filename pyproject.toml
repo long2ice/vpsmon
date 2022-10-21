@@ -1,0 +1,50 @@
+[tool.poetry]
+authors = ["long2ice <long2ice@gmail.com>"]
+description = ""
+name = "vpsmon"
+readme = "README.md"
+version = "0.1.0"
+
+[tool.poetry.dependencies]
+aerich = "*"
+asyncmy = "*"
+fastapi-admin-pro = {git = "https://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@github.com/fastapi-admin/fastapi-admin-pro.git", branch = "dev"}
+python = "^3.9"
+rearq = {git = "https://github.com/long2ice/rearq.git", branch = "dev"}
+requests-html = "*"
+sentry-sdk = "1.9.10"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core"]
+
+[tool.poetry.dev-dependencies]
+black = "*"
+isort = "*"
+mypy = "*"
+pytest = "*"
+pytest-asyncio = "*"
+ruff = "*"
+types-redis = "*"
+
+[tool.aerich]
+tortoise_orm = "vpsmon.settings.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line-length = 100
+target-version = ['py36', 'py37', 'py38', 'py39']
+
+[tool.pytest.ini_options]
+asyncio_mode = 'auto'
+
+[tool.mypy]
+ignore_missing_imports = true
+pretty = true
+
+[tool.ruff]
+line-length = 100
