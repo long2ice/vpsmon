@@ -1,9 +1,9 @@
 import abc
 import ipaddress
-import re
 from typing import Type
 
 from requests_html import AsyncHTMLSession
+from urllib3.util import Url
 
 from vpsmon.enums import ProviderType
 from vpsmon.models import VPS, DataCenter
@@ -13,11 +13,13 @@ from vpsmon.payment import Payment
 class Provider(abc.ABC):
     type: ProviderType
     name: str
-    homepage: str
+    homepage: Url
     icon: str
     payments: list[Type[Payment]]
     aff_url: str
     timeout = 30
+    datacenter_url: str
+    aff: int
 
     @classmethod
     def dict(cls):

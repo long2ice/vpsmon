@@ -9,3 +9,8 @@ async def test_get_datacenter_list():
 async def test_get_vps_list():
     vps_list = await RackNerd.get_vps_list()
     assert len(vps_list) > 0
+
+
+async def test_get_specials():
+    specials = await RackNerd._get_specials()
+    assert len(specials) > 0

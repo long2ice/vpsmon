@@ -40,7 +40,7 @@ async def get_vps(type_: ProviderType):
         on_conflict=["provider", "category", "name"],
         update_fields=[
             "cpu",
-            "ram",
+            "memory",
             "disk",
             "disk_type",
             "bandwidth",
@@ -50,6 +50,7 @@ async def get_vps(type_: ProviderType):
             "price",
             "currency",
             "period",
+            "count",
         ],
     )
     return len(vps_list)

@@ -8,7 +8,7 @@ class VPS(Model):
     provider = fields.CharEnumField(ProviderType)
     category = fields.CharField(max_length=255)
     name = fields.CharField(max_length=255)
-    ram = fields.IntField(description="RAM in MB")
+    memory = fields.IntField(description="RAM in MB")
     cpu = fields.FloatField(description="vCPU")
     disk = fields.FloatField(description="Disk in GB")
     disk_type = fields.CharField(max_length=255, null=True)
@@ -20,6 +20,7 @@ class VPS(Model):
     link = fields.CharField(max_length=255)
     currency = fields.CharEnumField(Currency, default=Currency.USD)
     period = fields.CharEnumField(VPSPeriod, default=VPSPeriod.month)
+    count = fields.IntField(default=-1)
 
     class Meta:
         unique_together = [("provider", "category", "name")]

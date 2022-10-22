@@ -37,11 +37,12 @@ class GreenCloud(Provider):
         BankTransfer,
     ]
     datacenter_url = f"{homepage}/data-centers.php"
-    aff_url = "https://greencloudvps.com/billing/aff.php?aff=4289"
+    aff = 4289
+    aff_url = f"https://greencloudvps.com/billing/aff.php?aff={aff}"
 
     @classmethod
     async def _get_vps_list(cls, category: str, path: str):
-        url = f"{cls.homepage}{path}"
+        url = f"https://greencloudvps.com/{path}"
         session = cls._get_session()
         vps_list = []
         r = await session.get(url, timeout=cls.timeout)
@@ -99,7 +100,7 @@ class GreenCloud(Provider):
                     provider=cls.type,
                     category=category,
                     name=name,
-                    ram=memory,
+                    memory=memory,
                     cpu=cpu,
                     disk=disk,
                     disk_type=disk_type,
@@ -109,7 +110,7 @@ class GreenCloud(Provider):
                     price=price,
                     currency=currency,
                     period=period,
-                    link=f"{cls.aff_url}&pid={pid}" if pid else link,
+                    link=cls.aff_url + f"&pid={pid}" if pid else link,
                 )
                 vps_list.append(vps)
         return vps_list
@@ -120,25 +121,45 @@ class GreenCloud(Provider):
             asyncio.ensure_future(
                 cls._get_vps_list("Budget Windows VPS", "/budget-windows-vps.php")
             ),
-            asyncio.ensure_future(cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")),
+            asyncio.ensure_future(
+                cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")
+            ),
             asyncio.ensure_future(
                 cls._get_vps_list("Jarvee Optimized VPS", "/jarvee-optimized-vps.php")
             ),
-            asyncio.ensure_future(cls._get_vps_list("High RAM VPS", "/high-ram-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("NVMe Windows VPS", "/nvme-windows-vps.php")),
+            asyncio.ensure_future(
+                cls._get_vps_list("High RAM VPS", "/high-ram-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("NVMe Windows VPS", "/nvme-windows-vps.php")
+            ),
             asyncio.ensure_future(
                 cls._get_vps_list("10Gbps Windows VPS", "/10gbps-windows-vps.php")
             ),
-            asyncio.ensure_future(cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")),
+            asyncio.ensure_future(
+                cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")
+            ),
             asyncio.ensure_future(
                 cls._get_vps_list("Managed Windows VPS", "/managed-windows-vps.php")
             ),
-            asyncio.ensure_future(cls._get_vps_list("Ryzen KVM VPS", "/ryzen-kvm-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("NVMe KVM VPS", "/nvme-kvm-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("1Gbps SSD KVM VPS", "/1gbps-ssd-kvm-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("10Gbps KVM VPS", "/kvm-10gbps-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("Storage KVM VPS", "/storage-kvm-vps.php")),
-            asyncio.ensure_future(cls._get_vps_list("DE SSD KVM VPS", "/de-ssd-kvm-vps.php")),
+            asyncio.ensure_future(
+                cls._get_vps_list("Ryzen KVM VPS", "/ryzen-kvm-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("NVMe KVM VPS", "/nvme-kvm-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("1Gbps SSD KVM VPS", "/1gbps-ssd-kvm-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("10Gbps KVM VPS", "/kvm-10gbps-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("Storage KVM VPS", "/storage-kvm-vps.php")
+            ),
+            asyncio.ensure_future(
+                cls._get_vps_list("DE SSD KVM VPS", "/de-ssd-kvm-vps.php")
+            ),
             asyncio.ensure_future(
                 cls._get_vps_list("Hong Kong SSD KVM VPS", "/hong-kong-ssd-kvm-vps.php")
             ),

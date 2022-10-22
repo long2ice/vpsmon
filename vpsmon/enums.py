@@ -4,6 +4,7 @@ from enum import Enum
 class ProviderType(str, Enum):
     racknerd = "racknerd"
     greencloud = "greencloud"
+    licloud = "licloud"
 
 
 class VPSPeriod(str, Enum):

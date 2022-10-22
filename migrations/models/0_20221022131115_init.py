@@ -5,7 +5,7 @@ async def upgrade(db: BaseDBAsyncClient) -> str:
     return """
         CREATE TABLE IF NOT EXISTS `datacenter` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `provider` VARCHAR(10) NOT NULL  COMMENT 'racknerd: racknerd\ngreencloud: greencloud',
+    `provider` VARCHAR(10) NOT NULL  COMMENT 'racknerd: racknerd\ngreencloud: greencloud\nlicoud: licoud',
     `name` VARCHAR(255) NOT NULL,
     `location` VARCHAR(255) NOT NULL,
     `ipv4` VARCHAR(255),
@@ -14,7 +14,7 @@ async def upgrade(db: BaseDBAsyncClient) -> str:
 ) CHARACTER SET utf8mb4;
 CREATE TABLE IF NOT EXISTS `vps` (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `provider` VARCHAR(10) NOT NULL  COMMENT 'racknerd: racknerd\ngreencloud: greencloud',
+    `provider` VARCHAR(10) NOT NULL  COMMENT 'racknerd: racknerd\ngreencloud: greencloud\nlicoud: licoud',
     `category` VARCHAR(255) NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `ram` INT NOT NULL  COMMENT 'RAM in MB',
@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `vps` (
     `link` VARCHAR(255) NOT NULL,
     `currency` VARCHAR(3) NOT NULL  COMMENT 'USD: USD\nEUR: EUR\nGBP: GBP\nCAD: CAD\nAUD: AUD\nJPY: JPY\nCNY: CNY' DEFAULT 'USD',
     `period` VARCHAR(5) NOT NULL  COMMENT 'month: month\nyear: year' DEFAULT 'month',
+    `count` INT NOT NULL  DEFAULT -1,
     UNIQUE KEY `uid_vps_provide_d891ee` (`provider`, `category`, `name`)
 ) CHARACTER SET utf8mb4;
 CREATE TABLE IF NOT EXISTS `aerich` (
