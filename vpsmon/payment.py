@@ -33,6 +33,11 @@ class AliPay(Payment):
     name = "AliPay"
 
 
+class WeChatPay(Payment):
+    icon = ""
+    name = "WeChatPay"
+
+
 class UnionPay(Payment):
     icon = ""
     name = "UnionPay"

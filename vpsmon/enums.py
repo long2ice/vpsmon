@@ -5,6 +5,8 @@ class ProviderType(str, Enum):
     racknerd = "racknerd"
     greencloud = "greencloud"
     licloud = "licloud"
+    pacificrack = "pacificrack"
+    cloudcone = "cloudcone"
 
 
 class VPSPeriod(str, Enum):

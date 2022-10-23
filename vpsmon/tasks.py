@@ -56,7 +56,7 @@ async def get_vps(type_: ProviderType):
     return len(vps_list)
 
 
-@rearq.task(cron="*/5 * * * *")
+@rearq.task(cron="0 * * * *")
 async def get_vps_list():
     providers = get_providers()
     for provider in providers:

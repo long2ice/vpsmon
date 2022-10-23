@@ -16,23 +16,23 @@ class LiCloud(Provider):
     aff = 304
     aff_url = f"https://my.licloud.io/aff.php?aff={aff}"
     payments = [PayPal, AliPay, UnionPay]
-    datacenter_url = ""
+    datacenter_url = "http://lg.hk-bgp.licloud.io"
 
     @classmethod
     async def get_vps_list(cls) -> list[VPS]:
         tasks = [
             asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/product/vps.html")
+                cls._get_vps_list(f"{cls.homepage}/product/vps.html", "NVMe RAID1存儲")
             ),
             asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/product/cloud.html")
+                cls._get_vps_list(f"{cls.homepage}/product/cloud.html", "Ceph存儲")
             ),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
 
     @classmethod
-    async def _get_vps_list(cls, url: str) -> list[VPS]:
+    async def _get_vps_list(cls, url: str, disk_type: str) -> list[VPS]:
         session = cls._get_session()
         vps_list = []
         r = await session.get(url)
@@ -88,11 +88,13 @@ class LiCloud(Provider):
                 vps = VPS(
                     provider=cls.type,
                     name=tds[0].text + " " + tds[1].text,
-                    category=h5[i].text.split("(")[0] if h5 else h2[i].text,
+                    category=h5[i].text.split("(")[0].strip()
+                    if h5
+                    else h2[i].text.strip(),
                     cpu=cpu,
                     memory=memory,
                     disk=disk,
-                    disk_type="Ceph存儲",
+                    disk_type=disk_type,
                     ipv4=ip,
                     speed=speed,
                     bandwidth=bandwidth,

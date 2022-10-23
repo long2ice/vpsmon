@@ -66,7 +66,7 @@ class GreenCloud(Provider):
                     memory = float(memory.split("MB")[0])
                 bandwidth_text = tds[4].text
                 if bandwidth_text == "Unmetered":
-                    bandwidth = 0
+                    bandwidth = -1
                 else:
                     bandwidth, bandwidth_unit = bandwidth_text.split(" ")
                     if bandwidth_unit == "TB":

@@ -26,9 +26,10 @@ class Provider(abc.ABC):
         return {
             "type": cls.type,
             "name": cls.name,
-            "homepage": cls.homepage,
+            "homepage": cls.aff_url,
             "icon": cls.icon,
             "payments": [payment.dict() for payment in cls.payments],
+            "datacenter_url": cls.datacenter_url,
         }
 
     @classmethod

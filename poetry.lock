@@ -825,7 +825,7 @@ postgres = ["asyncpg"]
 type = "git"
 url = "https://github.com/long2ice/rearq.git"
 reference = "dev"
-resolved_reference = "c84f3cf153706dd79c77887c9bb406b998e5ab72"
+resolved_reference = "0136dd68ccdb8c00e92451082167bc1a84a667f0"
 
 [[package]]
 name = "redis"
@@ -1159,7 +1159,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "405055158e4419b579d3f14e38759da82242e8ff91623160dbe2bde657c824b1"
+content-hash = "81e8b8995fe27578122e1c3abb24caf6e04b6d9e6b6254ed027084afb94146b4"
 
 [metadata.files]
 aerich = [
