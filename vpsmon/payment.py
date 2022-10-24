@@ -14,55 +14,55 @@ class Payment(abc.ABC):
 
 
 class PayPal(Payment):
-    icon = "https://www.paypalobjects.com/webstatic/icon/favicon.ico"
+    icon = "/paypal.svg"
     name = "PayPal"
 
 
 class CreditCard(Payment):
-    icon = ""
+    icon = "/credit-card.svg"
     name = "Credit Card"
 
 
 class DebitCard(Payment):
-    icon = ""
+    icon = "/debit-card.svg"
     name = "Debit Card"
 
 
 class AliPay(Payment):
-    icon = ""
+    icon = "/alipay.svg"
     name = "AliPay"
 
 
 class WeChatPay(Payment):
-    icon = ""
+    icon = "/wechatpay.svg"
     name = "WeChatPay"
 
 
 class UnionPay(Payment):
-    icon = ""
+    icon = "/unionpay.svg"
     name = "UnionPay"
 
 
 class WebMoneyZ(Payment):
-    icon = ""
+    icon = "/webmoney.svg"
     name = "WebMoney"
 
 
 class PerfectMoney(Payment):
-    icon = ""
+    icon = "/perfect-money.svg"
     name = "PerfectMoney"
 
 
 class BTC(Payment):
-    icon = ""
+    icon = "/btc.svg"
     name = "BTC"
 
 
 class ETH(Payment):
-    icon = ""
+    icon = "/eth.svg"
     name = "ETH"
 
 
 class BankTransfer(Payment):
-    icon = ""
+    icon = "/bank-transfer.svg"
     name = "Bank Transfer"

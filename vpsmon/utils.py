@@ -11,7 +11,7 @@ def _discover_providers():
     ret = {}
     for m in pkgutil.iter_modules(providers.__path__):
         mod = importlib.import_module(f"{providers.__name__}.{m.name}")
-        for name, member in inspect.getmembers(mod, inspect.isclass):
+        for _, member in inspect.getmembers(mod, inspect.isclass):
             if issubclass(member, Provider) and member is not Provider:
                 ret[member.type] = member
     return ret

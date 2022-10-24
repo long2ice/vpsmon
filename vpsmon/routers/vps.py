@@ -26,6 +26,8 @@ async def get_vps(
     speed: Optional[int] = None,
     price: Optional[float] = None,
     period: Optional[str] = None,
+    ipv4: Optional[int] = None,
+    ipv6: Optional[int] = None,
     limit: int = Query(8, le=8),
     offset: int = Query(0, ge=0),
 ):
@@ -44,6 +46,10 @@ async def get_vps(
         qs = qs.filter(bandwidth__gte=bandwidth)
     if speed:
         qs = qs.filter(speed__gte=speed)
+    if ipv4:
+        qs = qs.filter(ipv4__gte=ipv4)
+    if ipv6:
+        qs = qs.filter(ipv6__gte=ipv6)
     if price:
         qs = qs.filter(price__lte=price)
     if period:
