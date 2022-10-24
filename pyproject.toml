@@ -12,7 +12,7 @@ fastapi-admin-pro = {git = "https://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@git
 python = "^3.9"
 rearq = {git = "https://github.com/long2ice/rearq.git", branch = "dev"}
 requests-html = "*"
-sentry-sdk = "*"
+sentry-sdk = {version = "*", extras = ["fastapi"]}
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
@@ -28,9 +28,9 @@ ruff = "*"
 types-redis = "*"
 
 [tool.aerich]
-tortoise_orm = "vpsmon.settings.TORTOISE_ORM"
 location = "./migrations"
 src_folder = "./."
+tortoise_orm = "vpsmon.settings.TORTOISE_ORM"
 
 [tool.isort]
 profile = "black"
