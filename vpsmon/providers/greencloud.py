@@ -66,13 +66,13 @@ class GreenCloud(Provider):
                     memory = float(memory.split("MB")[0])
                 bandwidth_text = tds[4].text
                 if bandwidth_text == "Unmetered":
-                    bandwidth = -1
+                    bandwidth = -1.0
                 else:
                     bandwidth, bandwidth_unit = bandwidth_text.split(" ")
                     if bandwidth_unit == "TB":
                         bandwidth = float(bandwidth) * 1024
                     elif bandwidth_unit == "GB":
-                        bandwidth = int(bandwidth)
+                        bandwidth = float(bandwidth)
                 speed = tds[5].text.split(" ")[0]
                 if speed.endswith("Gbps"):
                     speed = float(speed.split("Gbps")[0]) * 1024
@@ -121,45 +121,25 @@ class GreenCloud(Provider):
             asyncio.ensure_future(
                 cls._get_vps_list("Budget Windows VPS", "/budget-windows-vps.php")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")
-            ),
+            asyncio.ensure_future(cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")),
             asyncio.ensure_future(
                 cls._get_vps_list("Jarvee Optimized VPS", "/jarvee-optimized-vps.php")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list("High RAM VPS", "/high-ram-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("NVMe Windows VPS", "/nvme-windows-vps.php")
-            ),
+            asyncio.ensure_future(cls._get_vps_list("High RAM VPS", "/high-ram-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("NVMe Windows VPS", "/nvme-windows-vps.php")),
             asyncio.ensure_future(
                 cls._get_vps_list("10Gbps Windows VPS", "/10gbps-windows-vps.php")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")
-            ),
+            asyncio.ensure_future(cls._get_vps_list("SEO Optimized VPS", "/seo-optimized-vps.php")),
             asyncio.ensure_future(
                 cls._get_vps_list("Managed Windows VPS", "/managed-windows-vps.php")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list("Ryzen KVM VPS", "/ryzen-kvm-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("NVMe KVM VPS", "/nvme-kvm-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("1Gbps SSD KVM VPS", "/1gbps-ssd-kvm-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("10Gbps KVM VPS", "/kvm-10gbps-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("Storage KVM VPS", "/storage-kvm-vps.php")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list("DE SSD KVM VPS", "/de-ssd-kvm-vps.php")
-            ),
+            asyncio.ensure_future(cls._get_vps_list("Ryzen KVM VPS", "/ryzen-kvm-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("NVMe KVM VPS", "/nvme-kvm-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("1Gbps SSD KVM VPS", "/1gbps-ssd-kvm-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("10Gbps KVM VPS", "/kvm-10gbps-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("Storage KVM VPS", "/storage-kvm-vps.php")),
+            asyncio.ensure_future(cls._get_vps_list("DE SSD KVM VPS", "/de-ssd-kvm-vps.php")),
             asyncio.ensure_future(
                 cls._get_vps_list("Hong Kong SSD KVM VPS", "/hong-kong-ssd-kvm-vps.php")
             ),

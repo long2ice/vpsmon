@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from vpsmon.enums import ProviderType
 from vpsmon.models import VPS
-from vpsmon.utils import get_providers, get_provider
+from vpsmon.utils import get_provider, get_providers
 
 router = APIRouter()
 

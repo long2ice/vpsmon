@@ -88,9 +88,7 @@ class LiCloud(Provider):
                 vps = VPS(
                     provider=cls.type,
                     name=tds[0].text + " " + tds[1].text,
-                    category=h5[i].text.split("(")[0].strip()
-                    if h5
-                    else h2[i].text.strip(),
+                    category=h5[i].text.split("(")[0].strip() if h5 else h2[i].text.strip(),
                     cpu=cpu,
                     memory=memory,
                     disk=disk,

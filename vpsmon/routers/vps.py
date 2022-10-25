@@ -2,7 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Query
 from pydantic import BaseModel
-from tortoise.contrib.pydantic import pydantic_queryset_creator
+from tortoise.contrib.pydantic import pydantic_queryset_creator  # type: ignore
 
 from vpsmon.enums import ProviderType
 from vpsmon.models import VPS
@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 class VPSRes(BaseModel):
-    data: pydantic_queryset_creator(VPS, exclude=("link",))
+    data: pydantic_queryset_creator(VPS, exclude=("link",))  # type: ignore # noqa: F821
     total: int
 
 

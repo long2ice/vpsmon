@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter
 
 from vpsmon.routers import datacenter, provider, vps
 
