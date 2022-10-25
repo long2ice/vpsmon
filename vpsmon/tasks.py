@@ -1,7 +1,7 @@
-from loguru import logger
 from rearq import ReArq
 from tortoise import Tortoise
 
+from vpsmon.bot import send_new_vps
 from vpsmon.enums import ProviderType
 from vpsmon.models import VPS, DataCenter
 from vpsmon.settings import settings
@@ -33,44 +33,43 @@ async def shutdown():
 
 
 @rearq.task()
-async def task_get_vps(type_: ProviderType):
-    await get_vps(type_)
-
-
 async def get_vps(type_: ProviderType):
     provider = get_provider(type_)
-    vps_list = await provider.get_vps_list()
-    await VPS.bulk_create(
-        vps_list,
-        on_conflict=["provider", "category", "name"],
-        update_fields=[
-            "cpu",
-            "memory",
-            "disk",
-            "disk_type",
-            "bandwidth",
-            "link",
-            "speed",
-            "ipv4",
-            "price",
-            "currency",
-            "period",
-            "count",
-        ],
-    )
-    return len(vps_list)
+    created_count = 0
+    updated_count = 0
+    for vps in await provider.get_vps_list():
+        instance, created = await VPS.update_or_create(
+            provider=type_,
+            name=vps.name,
+            category=vps.category,
+            defaults={
+                "cpu": vps.cpu,
+                "memory": vps.memory,
+                "disk": vps.disk,
+                "disk_type": vps.disk_type,
+                "bandwidth": vps.bandwidth,
+                "ipv4": vps.ipv4,
+                "ipv6": vps.ipv6,
+                "price": vps.price,
+                "currency": vps.currency,
+                "period": vps.period,
+                "link": vps.link,
+                "count": vps.count,
+            },
+        )
+        if created:
+            created_count += 1
+            await send_new_vps(instance)
+        else:
+            updated_count += 1
+    return {"created_count": created_count, "updated_count": updated_count}
 
 
 @rearq.task(cron="0 * * * *")
 async def get_vps_list():
     providers = get_providers()
-    ret = {}
     for provider in providers:
-        try:
-            ret[provider.type.value] = await get_vps(provider.type)
-        except Exception as e:
-            logger.exception(e)
-    return ret
+        await get_vps.delay(provider.type)
 
 
 @rearq.task(cron="0 0 * * *")

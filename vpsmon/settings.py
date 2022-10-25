@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     API_SECRET: str
     ENV = "production"
     SENTRY_DSN: Optional[str]
+    TG_BOT_TOKEN: str
+    TG_CHAT_ID = "@vpsmonchannel"
 
     class Config:
         env_file = ".env"

@@ -8,12 +8,13 @@ version = "0.1.0"
 [tool.poetry.dependencies]
 aerich = "*"
 asyncmy = "*"
-fastapi-admin-pro = {git = "https://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@github.com/fastapi-admin/fastapi-admin-pro.git", branch = "dev"}
+fastapi-admin-pro = { git = "https://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@github.com/fastapi-admin/fastapi-admin-pro.git", branch = "dev" }
 python = "^3.9"
-rearq = {git = "https://github.com/long2ice/rearq.git", branch = "dev"}
+rearq = { git = "https://github.com/long2ice/rearq.git", branch = "dev" }
 requests-html = "*"
-sentry-sdk = {version = "*", extras = ["fastapi"]}
-httpx = {version = "*", extras = ["http2"]}
+sentry-sdk = { version = "*", extras = ["fastapi"] }
+httpx = { version = "*", extras = ["http2"] }
+python-telegram-bot = { version = "*", allow-prereleases = true }
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
