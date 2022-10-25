@@ -13,8 +13,8 @@ CPU：{cpu} 核
 内存：{memory} MB
 硬盘：{disk} GB
 硬盘类型：{disk_type}
-带宽：{bandwidth} Mbps
-速率：{speed} Mbps
+流量：{bandwidth} GB
+带宽：{speed} Mbps
 IPv4：{ipv4} 个
 IPv6：{ipv6} 个
 价格：{price} {currency} / {period}
@@ -29,6 +29,7 @@ async def send_new_vps(vps: VPS):
     async with bot:
         provider = get_provider(vps.provider)
         vps.provider = provider.name
+        vps.period = vps.period.title()
         vps_dict = vps_model.from_orm(vps).dict()
         await bot.send_message(
             settings.TG_CHAT_ID,
