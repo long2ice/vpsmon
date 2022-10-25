@@ -19,7 +19,7 @@ class Pacificrack(Provider):
         url = f"{cls.homepage}/ssd-vps.html"
         session = cls._get_session()
         vps_list = []
-        r = await session.get(url)  # type: ignore
+        r = await session.get(url, timeout=cls.timeout)  # type: ignore
         boxes = r.html.find("div.ssdvps-plan-box")
         for box in boxes:
             name = box.find("span.ssdvps-plan-span", first=True).text

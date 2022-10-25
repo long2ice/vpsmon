@@ -18,7 +18,7 @@ class CloudCone(Provider):
     async def get_vps_list(cls) -> list[VPS]:
         session = cls._get_session()
         vps_list = []
-        r = await session.get(cls.homepage)
+        r = await session.get(cls.homepage, timeout=cls.timeout)
         for div in r.html.find("div.pricing"):
             name = div.find("h5", first=True).text
             price = div.find("span.h1", first=True).text.replace("$", "")

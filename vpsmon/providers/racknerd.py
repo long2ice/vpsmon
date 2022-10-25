@@ -23,7 +23,7 @@ class RackNerd(Provider):
     async def _get_vps_list(cls, category: str, path: str):
         url = f"{cls.homepage}{path}"
         session = cls._get_session()
-        r = await session.get(url)
+        r = await session.get(url, timeout=cls.timeout)
         vps_list = []
         for i, tr in enumerate(r.html.find("table tr")):
             if i == 0:

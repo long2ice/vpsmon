@@ -24,7 +24,7 @@ class DigitalVirt(Provider):
     @classmethod
     async def _get_vps_list(cls, url: str, category: str):
         vps_list = []
-        async with httpx.AsyncClient(http2=True) as client:
+        async with httpx.AsyncClient(http2=True, timeout=cls.timeout) as client:
             res = await client.get(url)
             html = HTML(html=res.text)
             for div in html.find("div.product-wrap-box"):

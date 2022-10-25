@@ -35,7 +35,7 @@ class LiCloud(Provider):
     async def _get_vps_list(cls, url: str, disk_type: str) -> list[VPS]:
         session = cls._get_session()
         vps_list = []
-        r = await session.get(url)  # type: ignore
+        r = await session.get(url, timeout=cls.timeout)  # type: ignore
         tables = r.html.find("table")
         h5 = r.html.find("h5.mb-1")
         h2 = r.html.find("h2")
