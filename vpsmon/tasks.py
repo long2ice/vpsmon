@@ -32,6 +32,11 @@ async def shutdown():
     await Tortoise.close_connections()
 
 
+@rearq.task()
+async def task_get_vps(type_: ProviderType):
+    await get_vps(type_)
+
+
 async def get_vps(type_: ProviderType):
     provider = get_provider(type_)
     vps_list = await provider.get_vps_list()

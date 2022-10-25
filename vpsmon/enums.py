@@ -12,6 +12,7 @@ class ProviderType(str, Enum):
 class VPSPeriod(str, Enum):
     month = "month"
     year = "year"
+    triennium = "triennium"
 
 
 class Currency(str, Enum):

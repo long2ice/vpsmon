@@ -41,8 +41,75 @@ class GreenCloud(Provider):
     aff_url = f"https://greencloudvps.com/billing/aff.php?aff={aff}"
 
     @classmethod
+    async def _get_budget_vps(cls):
+        url = f"{cls.homepage}/billing/store/budget-kvm-sale"
+        session = cls._get_session()
+        r = await session.get(url, timeout=cls.timeout)
+        vps_list = []
+        products = r.html.find("div.product")
+        for product in products:
+            id_ = product.find(".product", first=True).attrs["id"]
+            pid = id_.split("product")[1]
+            name = product.find(f"#{id_}-name", first=True).text
+            count = product.find("span.qty", first=True).text.split(" ")[0]
+            memory_text = product.find(f"#{id_}-feature1 .feature-value", first=True).text
+            if memory_text.endswith("GB"):
+                memory = float(memory_text.split("GB")[0]) * 1024
+            else:
+                memory = float(memory_text.split("MB")[0])
+            disk_text = product.find(f"#{id_}-feature3 .feature-value", first=True).text
+            disk_items = disk_text.split(" ")
+            disk = disk_items[0]
+            disk_type = " ".join(disk_items[1:])
+            if disk.endswith("TB"):
+                disk = int(float(disk.split("TB")[0]) * 1024)
+            elif disk.endswith("GB"):
+                disk = int(disk.split("GB")[0])
+            cpu = product.find(f"#{id_}-feature4 .feature-value", first=True).text.split(" ")[0]
+            ipv4 = product.find(f"#{id_}-feature5 .feature-value", first=True).text
+            ipv6 = product.find(f"#{id_}-feature6 .feature-value", first=True).text.split("/")[1]
+            ipv6 = 2 ** (128 - int(ipv6))
+            bandwidth = product.find(f"#{id_}-feature7 .feature-value", first=True).text
+            if bandwidth.endswith("TB"):
+                bandwidth = int(float(bandwidth.split("TB")[0]) * 1024)
+            elif bandwidth.endswith("GB"):
+                bandwidth = int(bandwidth.split("GB")[0])
+            speed = product.find(f"#{id_}-feature8 .feature-value", first=True).text
+            if speed.endswith("Gbps"):
+                speed = int(float(speed.split("Gbps")[0]) * 1024)
+            elif speed.endswith("Mbps"):
+                speed = int(speed.split("Mbps")[0])
+            price, currency = product.find("span.price", first=True).text.split(" ")
+            price = float(price[1:])
+            product_price = product.find(".product-pricing", first=True).text
+            period = "year"
+            if "Triennially" in product_price:
+                period = "triennium"
+            vps_list.append(
+                VPS(
+                    provider=cls.type,
+                    category="Budget KVM Sale",
+                    name=name,
+                    link=f"{cls.aff_url}&pid={pid}",
+                    price=price,
+                    currency=currency,
+                    count=count,
+                    period=period,
+                    bandwidth=bandwidth,
+                    ipv4=ipv4,
+                    ipv6=ipv6,
+                    speed=speed,
+                    cpu=cpu,
+                    memory=memory,
+                    disk=disk,
+                    disk_type=disk_type,
+                )
+            )
+        return vps_list
+
+    @classmethod
     async def _get_vps_list(cls, category: str, path: str):
-        url = f"https://greencloudvps.com/{path}"
+        url = f"{cls.homepage}/{path}"
         session = cls._get_session()
         vps_list = []
         r = await session.get(url, timeout=cls.timeout)
@@ -149,6 +216,7 @@ class GreenCloud(Provider):
             asyncio.ensure_future(
                 cls._get_vps_list("Vietnam SSD KVM VPS", "/vietnam-ssd-kvm-vps.php")
             ),
+            asyncio.ensure_future(cls._get_budget_vps()),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
