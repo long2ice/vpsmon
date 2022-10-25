@@ -67,9 +67,9 @@ async def get_vps_list():
     ret = {}
     for provider in providers:
         try:
-            ret[provider.type] = await get_vps(provider.type)
+            ret[provider.type.value] = await get_vps(provider.type)
         except Exception as e:
-            logger.error(f"Get VPS list from {provider.name} failed: {e}")
+            logger.exception(e)
     return ret
 
 
