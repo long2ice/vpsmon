@@ -1,3 +1,4 @@
+from loguru import logger
 from rearq import ReArq
 from tortoise import Tortoise
 
@@ -31,7 +32,6 @@ async def shutdown():
     await Tortoise.close_connections()
 
 
-@rearq.task()
 async def get_vps(type_: ProviderType):
     provider = get_provider(type_)
     vps_list = await provider.get_vps_list()
@@ -60,7 +60,10 @@ async def get_vps(type_: ProviderType):
 async def get_vps_list():
     providers = get_providers()
     for provider in providers:
-        await get_vps.delay(provider.type)
+        try:
+            await get_vps(provider.type)
+        except Exception as e:
+            logger.error(f"Get VPS list from {provider.name} failed: {e}")
 
 
 @rearq.task(cron="0 0 * * *")
