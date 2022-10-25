@@ -64,11 +64,13 @@ async def get_vps(type_: ProviderType):
 @rearq.task(cron="0 * * * *")
 async def get_vps_list():
     providers = get_providers()
+    ret = {}
     for provider in providers:
         try:
-            await get_vps(provider.type)
+            ret[provider.type] = await get_vps(provider.type)
         except Exception as e:
             logger.error(f"Get VPS list from {provider.name} failed: {e}")
+    return ret
 
 
 @rearq.task(cron="0 0 * * *")
