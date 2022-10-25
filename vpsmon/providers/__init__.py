@@ -1,9 +1,8 @@
 import abc
 import ipaddress
-from typing import Type
+from typing import Optional, Type
 
 from requests_html import AsyncHTMLSession
-from urllib3.util import Url
 
 from vpsmon.enums import ProviderType
 from vpsmon.models import VPS, DataCenter
@@ -13,7 +12,7 @@ from vpsmon.payment import Payment
 class Provider(abc.ABC):
     type: ProviderType
     name: str
-    homepage: Url
+    homepage: str
     icon: str
     payments: list[Type[Payment]]
     aff_url: str
@@ -57,7 +56,7 @@ class Provider(abc.ABC):
             return None
 
     @classmethod
-    def _check_ipv6(cls, ipv6: str):
+    def _check_ipv6(cls, ipv6: Optional[str]):
         if not ipv6:
             return None
         try:

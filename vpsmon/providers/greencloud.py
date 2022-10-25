@@ -44,7 +44,7 @@ class GreenCloud(Provider):
     async def _get_budget_vps(cls):
         url = f"{cls.homepage}/billing/store/budget-kvm-sale"
         session = cls._get_session()
-        r = await session.get(url, timeout=cls.timeout)
+        r = await session.get(url, timeout=cls.timeout)  # type: ignore
         vps_list = []
         products = r.html.find("div.product")
         for product in products:
@@ -112,7 +112,7 @@ class GreenCloud(Provider):
         url = f"{cls.homepage}/{path}"
         session = cls._get_session()
         vps_list = []
-        r = await session.get(url, timeout=cls.timeout)
+        r = await session.get(url, timeout=cls.timeout)  # type: ignore
         tables = r.html.find(".tablesorter")
         for table in tables:
             for tr in table.find("tr"):
@@ -224,7 +224,7 @@ class GreenCloud(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get(cls.datacenter_url)  # type: ignore
         datacenter_list = []
         sections = r.html.find('div[data-element_type="column"] section')
         for section in sections:

@@ -7,6 +7,7 @@ class ProviderType(str, Enum):
     licloud = "licloud"
     pacificrack = "pacificrack"
     cloudcone = "cloudcone"
+    digitalvirt = "digitalvirt"
 
 
 class VPSPeriod(str, Enum):

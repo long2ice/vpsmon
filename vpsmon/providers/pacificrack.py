@@ -19,7 +19,7 @@ class Pacificrack(Provider):
         url = f"{cls.homepage}/ssd-vps.html"
         session = cls._get_session()
         vps_list = []
-        r = await session.get(url)
+        r = await session.get(url)  # type: ignore
         boxes = r.html.find("div.ssdvps-plan-box")
         for box in boxes:
             name = box.find("span.ssdvps-plan-span", first=True).text
@@ -77,7 +77,7 @@ class Pacificrack(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get(cls.datacenter_url)  # type: ignore
         p_list = r.html.find("#information p")
         name = p_list[0].find("b", first=True).text
         ipv4 = p_list[1].text.split(" ")[-1]

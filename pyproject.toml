@@ -13,6 +13,7 @@ python = "^3.9"
 rearq = {git = "https://github.com/long2ice/rearq.git", branch = "dev"}
 requests-html = "*"
 sentry-sdk = {version = "*", extras = ["fastapi"]}
+httpx = {version = "*", extras = ["http2"]}
 
 [build-system]
 build-backend = "poetry.core.masonry.api"
