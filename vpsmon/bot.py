@@ -30,6 +30,11 @@ async def send_new_vps(vps: VPS):
         provider = get_provider(vps.provider)
         vps.provider = provider.name
         vps.period = vps.period.title()
+        if vps.count == -1:
+            vps.count = "无限制"
+        elif vps.count == 0:
+            vps.count = "暂时无货"
+        vps.link = settings.vps_link(vps.pk)
         vps_dict = vps_model.from_orm(vps).dict()
         await bot.send_message(
             settings.TG_CHAT_ID,

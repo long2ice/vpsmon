@@ -14,6 +14,10 @@ class Settings(BaseSettings):
     SENTRY_DSN: Optional[str]
     TG_BOT_TOKEN: str
     TG_CHAT_ID = "@vpsmonchannel"
+    SITE_URL = "https://www.vpsmon.me"
+
+    def vps_link(self, vps_id: int):
+        return self.SITE_URL + f"/vps/link?id={vps_id}"
 
     class Config:
         env_file = ".env"
