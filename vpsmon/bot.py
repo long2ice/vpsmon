@@ -22,7 +22,9 @@ IPv6：{ipv6} 个
 购买地址：{link}
 """
 
-vps_model = pydantic_model_creator(VPS, exclude=("id", "created_at", "updated_at", "count"))
+vps_model = pydantic_model_creator(
+    VPS, exclude=("id", "created_at", "updated_at", "count", "speed")
+)
 
 
 async def send_new_vps(vps: VPS):
@@ -35,9 +37,12 @@ async def send_new_vps(vps: VPS):
             count = "无限制"
         elif count == 0:
             count = "暂时无货"
+        speed = vps.speed
+        if speed == -1:
+            speed = "无限制"
         vps.link = settings.vps_link(vps.pk)
         vps_dict = vps_model.from_orm(vps).dict()
         await bot.send_message(
             settings.TG_CHAT_ID,
-            vps_template.format(count=count, **vps_dict),
+            vps_template.format(count=count, speed=speed, **vps_dict),
         )
