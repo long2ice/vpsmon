@@ -55,6 +55,7 @@ async def get_vps(type_: ProviderType):
                 "period": vps.period,
                 "link": vps.link,
                 "count": vps.count,
+                "speed": vps.speed,
             },
         )
         if created:
