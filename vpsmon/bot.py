@@ -22,7 +22,7 @@ IPv6：{ipv6} 个
 购买地址：{link}
 """
 
-vps_model = pydantic_model_creator(VPS, exclude=("id", "created_at", "updated_at"))
+vps_model = pydantic_model_creator(VPS, exclude=("id", "created_at", "updated_at", "count"))
 
 
 async def send_new_vps(vps: VPS):
@@ -30,13 +30,14 @@ async def send_new_vps(vps: VPS):
         provider = get_provider(vps.provider)
         vps.provider = provider.name
         vps.period = vps.period.title()
-        if vps.count == -1:
-            vps.count = "无限制"
-        elif vps.count == 0:
-            vps.count = "暂时无货"
+        count = vps.count
+        if count == -1:
+            count = "无限制"
+        elif count == 0:
+            count = "暂时无货"
         vps.link = settings.vps_link(vps.pk)
         vps_dict = vps_model.from_orm(vps).dict()
         await bot.send_message(
             settings.TG_CHAT_ID,
-            vps_template.format(**vps_dict),
+            vps_template.format(count=count, **vps_dict),
         )

@@ -1,3 +1,4 @@
+from loguru import logger
 from rearq import ReArq
 from tortoise import Tortoise
 
@@ -60,7 +61,11 @@ async def get_vps(type_: ProviderType):
         )
         if created:
             created_count += 1
-            await send_new_vps(instance)
+            if not settings.DEBUG:
+                try:
+                    await send_new_vps(instance)
+                except Exception as e:
+                    logger.exception(e)
         else:
             updated_count += 1
     return {"created_count": created_count, "updated_count": updated_count}

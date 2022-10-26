@@ -9,12 +9,15 @@ class ProviderType(str, Enum):
     cloudcone = "cloudcone"
     digitalvirt = "digitalvirt"
     bandwagonhost = "bandwagonhost"
+    dmit = "dmit"
+    vultr = "vultr"
 
 
 class VPSPeriod(str, Enum):
     month = "month"
     year = "year"
     triennium = "triennium"
+    quarterly = "quarterly"
 
 
 class Currency(str, Enum):

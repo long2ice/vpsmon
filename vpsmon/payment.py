@@ -66,3 +66,18 @@ class ETH(Payment):
 class BankTransfer(Payment):
     icon = "/bank-transfer.svg"
     name = "Bank Transfer"
+
+
+class Stripe(Payment):
+    icon = "/stripe.svg"
+    name = "Stripe"
+
+
+class WireTransfer(Payment):
+    icon = "/wire-transfer.svg"
+    name = "WireTransfer"
+
+
+class GiftCard(Payment):
+    icon = "/gift-card.svg"
+    name = "GiftCard"
