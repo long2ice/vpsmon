@@ -8,7 +8,7 @@ from vpsmon.providers import Provider
 
 class Vultr(Provider):
     type = ProviderType.vultr
-    icon = "https://www.vultr.com/apple-touch-icon.png?v=1"
+    icon = "/vultr.png"
     name = "Vultr"
     homepage = "https://www.vultr.com"
     payments = [PayPal, AliPay, ETH, CreditCard, BTC, WireTransfer, UnionPay]

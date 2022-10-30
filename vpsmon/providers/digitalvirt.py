@@ -27,7 +27,7 @@ class DigitalVirt(Provider):
         async with httpx.AsyncClient(http2=True, timeout=cls.timeout) as client:
             res = await client.get(url)
             html = HTML(html=res.text)
-            for div in html.find("div.product-wrap-box"):
+            for div in html.find("div.product-wrap-box"):  # type: ignore
                 name = div.find(".product-wrap-title", first=True).text
                 price = (
                     div.find(".product-wrap-price .big", first=True).text.replace("¥", "").strip()
