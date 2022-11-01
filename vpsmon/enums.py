@@ -11,6 +11,7 @@ class ProviderType(str, Enum):
     bandwagonhost = "bandwagonhost"
     dmit = "dmit"
     vultr = "vultr"
+    vps = "v.ps"
 
 
 class VPSPeriod(str, Enum):

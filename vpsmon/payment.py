@@ -63,6 +63,11 @@ class ETH(Payment):
     name = "ETH"
 
 
+class USDT(Payment):
+    icon = "/usdt.svg"
+    name = "USDT"
+
+
 class BankTransfer(Payment):
     icon = "/bank-transfer.svg"
     name = "Bank Transfer"
@@ -81,3 +86,13 @@ class WireTransfer(Payment):
 class GiftCard(Payment):
     icon = "/gift-card.svg"
     name = "GiftCard"
+
+
+class GooglePay(Payment):
+    icon = "/google-pay.svg"
+    name = "GooglePay"
+
+
+class ApplePay(Payment):
+    icon = "/apple-pay.svg"
+    name = "ApplePay"

@@ -52,7 +52,7 @@ class Vultr(Provider):
                         cpu=cpu,
                         memory=memory,
                         disk=disk,
-                        disk_type="SSB",
+                        disk_type="SSD",
                         bandwidth=bandwidth,
                         ipv4=1,
                         ipv6=1,
