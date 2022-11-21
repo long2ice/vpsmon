@@ -19,6 +19,7 @@ class Provider(abc.ABC):
     timeout = 30
     datacenter_url: str
     aff: int
+    enable = True
 
     @classmethod
     def dict(cls):

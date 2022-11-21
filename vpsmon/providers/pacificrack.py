@@ -13,6 +13,7 @@ class Pacificrack(Provider):
     aff_url = f"https://pacificrack.com/portal/aff.php?aff={aff}"
     payments = [PayPal, AliPay, UnionPay, WeChatPay]
     datacenter_url = "https://lg.pacificrack.com"
+    enable = False
 
     @classmethod
     async def get_vps_list(cls) -> list[VPS]:
