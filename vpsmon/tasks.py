@@ -39,35 +39,47 @@ async def get_vps(type_: ProviderType):
     created_count = 0
     updated_count = 0
     for vps in await provider.get_vps_list():
-        instance, created = await VPS.update_or_create(
+        defaults = {
+            "cpu": vps.cpu,
+            "memory": vps.memory,
+            "disk": vps.disk,
+            "disk_type": vps.disk_type,
+            "bandwidth": vps.bandwidth,
+            "ipv4": vps.ipv4,
+            "ipv6": vps.ipv6,
+            "price": vps.price,
+            "currency": vps.currency,
+            "period": vps.period,
+            "link": vps.link,
+            "count": vps.count,
+            "speed": vps.speed,
+        }
+        instance = await VPS.get_or_none(
             provider=type_,
             name=vps.name,
             category=vps.category,
-            defaults={
-                "cpu": vps.cpu,
-                "memory": vps.memory,
-                "disk": vps.disk,
-                "disk_type": vps.disk_type,
-                "bandwidth": vps.bandwidth,
-                "ipv4": vps.ipv4,
-                "ipv6": vps.ipv6,
-                "price": vps.price,
-                "currency": vps.currency,
-                "period": vps.period,
-                "link": vps.link,
-                "count": vps.count,
-                "speed": vps.speed,
-            },
         )
-        if created:
-            created_count += 1
-            if not settings.DEBUG:
-                try:
-                    await send_new_vps(instance)
-                except Exception as e:
-                    logger.exception(e)
-        else:
+        notify = False
+        if instance:
             updated_count += 1
+            if instance.count == 0 and vps.count > 0:
+                notify = True
+            await instance.update_from_dict(defaults).save()
+        else:
+            instance = await VPS.create(
+                provider=type_,
+                name=vps.name,
+                category=vps.category,
+                **defaults,
+            )
+            notify = True
+            created_count += 1
+        if not settings.DEBUG and notify:
+            try:
+                await send_new_vps(instance)
+            except Exception as e:
+                logger.exception(e)
+
     return {"created_count": created_count, "updated_count": updated_count}
 
 
