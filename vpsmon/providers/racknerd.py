@@ -87,19 +87,18 @@ class RackNerd(Provider):
         session = cls._get_session()
         r = await session.get(url)
         h3 = r.html.find("h3", first=True)
-        category = h3.text
-        plan_list = r.html.find("div.plan-listing", first=True)
+        category = h3.text.replace("+", "-")
         vps_list = []
-        for plan_box in plan_list.find("div.plan-box"):
-            name = plan_box.find("h3", first=True).text
-            price = plan_box.find("div.price", first=True).text
+        for plan_box in r.html.find("#plan1 div.plan__contant"):
+            name = plan_box.find("h5", first=True).text
+            price = plan_box.find("figure", first=True).text
             price = float(price.split("$")[1])
             currency = "USD"
-            period = plan_box.find("span.per", first=True).text
+            period = plan_box.find("figcaption", first=True).text
             _, period = period.split(" ")
-            if period == "YEAR":
+            if period == "Year":
                 period = "year"
-            elif period == "MONTH":
+            elif period == "Month":
                 period = "month"
             lis = plan_box.find("ul li")
             cpu = lis[0].text.split(" ")[0]
@@ -107,10 +106,11 @@ class RackNerd(Provider):
             disk_type = lis[1].text.split(" GB ")[1]
             memory, unit, _ = lis[2].text.split(" ")
             if unit == "GB":
-                memory = int(memory) * 1024
+                memory = float(memory) * 1024
             elif unit == "MB":
-                memory = int(memory)
+                memory = float(memory)
             bandwidth, unit, _, _ = lis[3].text.split(" ")
+            bandwidth = bandwidth.replace(",", "")
             if unit == "TB":
                 bandwidth = float(bandwidth) * 1024
             elif unit == "GB":
@@ -120,6 +120,7 @@ class RackNerd(Provider):
                 speed = speed.split("Gbps")[0]
                 speed = int(speed) * 1024
             ipv4 = lis[6].text.split(" ")[0]
+            remarks = lis[8].text
             href = plan_box.find("a", first=True).attrs["href"]
             pid = href.split("pid=")[1]
             link = cls.aff_url + f"&pid={pid}"
@@ -138,6 +139,7 @@ class RackNerd(Provider):
                 ipv4=ipv4,
                 period=period,
                 link=link,
+                remarks=remarks,
             )
             vps_list.append(vps)
         return vps_list

@@ -19,6 +19,7 @@ IPv4：{ipv4} 个
 IPv6：{ipv6} 个
 价格：{price} {currency} / {period}
 数量：{count}
+备注：{remarks}
 购买地址：{link}
 """
 

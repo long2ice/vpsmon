@@ -53,6 +53,7 @@ async def get_vps(type_: ProviderType):
             "link": vps.link,
             "count": vps.count,
             "speed": vps.speed,
+            "remarks": vps.remarks,
         }
         instance = await VPS.get_or_none(
             provider=type_,

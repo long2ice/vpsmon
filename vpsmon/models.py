@@ -20,6 +20,7 @@ class VPS(Model):
     link = fields.CharField(max_length=255)
     currency = fields.CharEnumField(Currency, default=Currency.USD)
     period = fields.CharEnumField(VPSPeriod, default=VPSPeriod.month)
+    remarks = fields.CharField(max_length=255, null=True)
     count = fields.IntField(default=-1)
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
