@@ -84,7 +84,7 @@ async def get_vps(type_: ProviderType):
     return {"created_count": created_count, "updated_count": updated_count}
 
 
-@rearq.task(cron="0 * * * *")
+@rearq.task(cron="*/10 * * * *")
 async def get_vps_list():
     providers = get_providers()
     for provider in providers:
