@@ -4,7 +4,7 @@ from enum import Enum
 class ProviderType(str, Enum):
     racknerd = "racknerd"
     greencloud = "greencloud"
-    licloud = "licloud"
+    hosthatch = "hosthatch"
     pacificrack = "pacificrack"
     cloudcone = "cloudcone"
     digitalvirt = "digitalvirt"
