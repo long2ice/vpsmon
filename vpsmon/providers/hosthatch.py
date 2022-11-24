@@ -43,7 +43,7 @@ class HostHatch(Provider):
             elif memory_unit == "MB":
                 memory = float(memory)
             disk, disk_unit = ps[2].text.split(" ")[:2]
-            dist_type = " ".join(ps[2].text.split(" ")[2:])
+            disk_type = " ".join(ps[2].text.split(" ")[2:])
             if disk_unit == "GB":
                 disk = float(disk)
             elif disk_unit == "TB":
@@ -62,7 +62,7 @@ class HostHatch(Provider):
                     memory=memory,
                     disk=disk,
                     bandwidth=bandwidth,
-                    dist_type=dist_type,
+                    disk_type=disk_type,
                     ipv4=1,
                     price=price,
                     period="month",
@@ -76,13 +76,17 @@ class HostHatch(Provider):
     async def get_vps_list(cls) -> list[VPS]:
         tasks = [
             asyncio.ensure_future(cls._get_vm(f"{cls.homepage}/ssd-vps", "Compute VM")),
-            asyncio.ensure_future(cls._get_vm(f"{cls.homepage}/storage-vps", "Storage VM")),
+            asyncio.ensure_future(
+                cls._get_vm(f"{cls.homepage}/storage-vps", "Storage VM")
+            ),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
 
     @classmethod
-    async def _get_datacenter(cls, location: str, name: str, href: str) -> Optional[DataCenter]:
+    async def _get_datacenter(
+        cls, location: str, name: str, href: str
+    ) -> Optional[DataCenter]:
         session = cls._get_session()
         try:
             r = await session.get(href)
