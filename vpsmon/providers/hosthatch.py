@@ -33,6 +33,8 @@ class HostHatch(Provider):
         vps_list = []
         for i, item in enumerate(r.html.find("product-presenter")):
             name = item.attrs["heading"]
+            price = item.attrs["price"]
+            price = float(price) / 100
             ps = item.find("p")
             cpu = ps[0].text.split(" ")[0]
             memory, memory_unit = ps[1].text.split(" ")[:2]
@@ -62,6 +64,8 @@ class HostHatch(Provider):
                     bandwidth=bandwidth,
                     dist_type=dist_type,
                     ipv4=1,
+                    price=price,
+                    period="month",
                 )
             )
         return vps_list
@@ -70,13 +74,17 @@ class HostHatch(Provider):
     async def get_vps_list(cls) -> list[VPS]:
         tasks = [
             asyncio.ensure_future(cls._get_vm(f"{cls.homepage}/ssd-vps", "Compute VM")),
-            asyncio.ensure_future(cls._get_vm(f"{cls.homepage}/storage-vps", "Storage VM")),
+            asyncio.ensure_future(
+                cls._get_vm(f"{cls.homepage}/storage-vps", "Storage VM")
+            ),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
 
     @classmethod
-    async def _get_datacenter(cls, location: str, name: str, href: str) -> Optional[DataCenter]:
+    async def _get_datacenter(
+        cls, location: str, name: str, href: str
+    ) -> Optional[DataCenter]:
         session = cls._get_session()
         try:
             r = await session.get(href)
