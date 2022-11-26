@@ -59,9 +59,11 @@ class DigitalVirt(Provider):
                     speed = float(re.findall(r"\d+", speed_text)[0]) * 1024
                 else:
                     speed = float(re.findall(r"\d+", speed_text)[0])
+                bandwidth = lis[4].find("strong", first=True).text
                 try:
-                    bandwidth, _ = lis[4].find("strong", first=True).text.split("/")
-                    if bandwidth.endswith("TB"):
+                    if "/" in bandwidth:
+                        bandwidth, _ = bandwidth.split("/")
+                    if bandwidth.endswith("T"):
                         bandwidth = float(re.findall(r"\d+", bandwidth)[0]) * 1024
                     else:
                         bandwidth = float(re.findall(r"\d+", bandwidth)[0])

@@ -135,7 +135,9 @@ IPv6：{ipv6} 个
 """
 
 vps_model = pydantic_model_creator(
-    VPS, exclude=("id", "created_at", "updated_at", "count", "speed"), name="bot_vps"
+    VPS,
+    exclude=("id", "created_at", "updated_at", "count", "speed", "bandwidth"),
+    name="bot_vps",
 )
 
 
@@ -154,9 +156,15 @@ async def send_new_vps(vps: VPS, chat_id: Optional[int] = None):
         speed_str = str(speed)
         if speed == -1:
             speed_str = "无限制"
+        bandwidth = vps.bandwidth
+        bandwidth_str = str(bandwidth)
+        if bandwidth == -1:
+            bandwidth_str = "无限制"
         vps.link = settings.vps_link(vps.pk)
         vps_dict = vps_model.from_orm(vps).dict()
-        text = new_vps_template.format(count=count_str, speed=speed_str, **vps_dict)
+        text = new_vps_template.format(
+            count=count_str, speed=speed_str, bandwidth=bandwidth_str, **vps_dict
+        )
         if chat_id:
             await bot.send_message(
                 chat_id=chat_id,
