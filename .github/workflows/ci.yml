@@ -1,5 +1,5 @@
 name: ci
-on: [push, pull_request]
+on: [ push, pull_request ]
 jobs:
   ci:
     runs-on: ubuntu-latest
@@ -15,4 +15,4 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: CI
-        run: cp .env.example .env && make ci
+        run: make check
