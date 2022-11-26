@@ -104,7 +104,9 @@ class DigitalVirt(Provider):
             ),
             asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/qn-vps", "洛杉矶 QN")),
             asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/hk-cmi-vps", "香港 CMI")),
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/hk-vps", "香港 CIA")),
+            asyncio.ensure_future(
+                cls._get_vps_list(f"{cls.homepage}/store/la-vps-cn2gia", "洛杉矶 CN2 GIA")
+            ),
             asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/jp-vps-bbetc", "日本软银")),
         ]
         vps_list = await asyncio.gather(*tasks)
