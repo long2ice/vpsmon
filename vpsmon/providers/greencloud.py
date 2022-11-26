@@ -36,7 +36,6 @@ class GreenCloud(Provider):
         ETH,
         BankTransfer,
     ]
-    datacenter_url = f"{homepage}/data-centers.php"
     aff = 4289
     aff_url = f"https://greencloudvps.com/billing/aff.php?aff={aff}"
 
@@ -226,7 +225,7 @@ class GreenCloud(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)  # type: ignore
+        r = await session.get(f"{cls.homepage}/data-centers.php")
         datacenter_list = []
         sections = r.html.find('div[data-element_type="column"] section')
         for section in sections:

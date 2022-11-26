@@ -12,7 +12,6 @@ class Vultr(Provider):
     name = "Vultr"
     homepage = "https://www.vultr.com"
     payments = [PayPal, AliPay, ETH, CreditCard, BTC, WireTransfer, UnionPay]
-    datacenter_url = "https://www.vultr.com/features/datacenter-locations/"
     aff = 5324
     aff_url = f"https://www.dmit.io/aff.php?aff={aff}"
 
@@ -84,7 +83,7 @@ class Vultr(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("https://www.vultr.com/features/datacenter-locations/")
         slider = r.html.find(".full-width-slider__slider", first=True)
         tasks = []
         for a in slider.find("a"):

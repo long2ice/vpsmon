@@ -17,7 +17,6 @@ class Provider(abc.ABC):
     payments: list[Type[Payment]]
     aff_url: str
     timeout = 30
-    datacenter_url: str
     aff: int
     enable = True
 
@@ -29,7 +28,6 @@ class Provider(abc.ABC):
             "homepage": cls.aff_url,
             "icon": cls.icon,
             "payments": [payment.dict() for payment in cls.payments],
-            "datacenter_url": cls.datacenter_url,
         }
 
     @classmethod

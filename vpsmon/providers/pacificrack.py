@@ -12,7 +12,6 @@ class Pacificrack(Provider):
     aff = 3951
     aff_url = f"https://pacificrack.com/portal/aff.php?aff={aff}"
     payments = [PayPal, AliPay, UnionPay, WeChatPay]
-    datacenter_url = "https://lg.pacificrack.com"
     enable = False
 
     @classmethod
@@ -78,7 +77,7 @@ class Pacificrack(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)  # type: ignore
+        r = await session.get("https://lg.pacificrack.com")
         p_list = r.html.find("#information p")
         name = p_list[0].find("b", first=True).text
         ipv4 = p_list[1].text.split(" ")[-1]

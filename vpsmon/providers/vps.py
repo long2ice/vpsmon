@@ -21,7 +21,6 @@ class VPSHosting(Provider):
     name = "V.PS"
     homepage = "https://v.ps"
     payments = [AliPay, ETH, BTC, USDT, ApplePay, GooglePay, Stripe, BankTransfer]
-    datacenter_url = "https://v.ps/speedtest"
     aff = 544
     aff_url = f"https://vps.hosting/?affid={aff}"
 
@@ -94,7 +93,7 @@ class VPSHosting(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("https://v.ps/speedtest")
         table = r.html.find("table", first=True)
         tasks = []
         for i, tr in enumerate(table.find("tr")):

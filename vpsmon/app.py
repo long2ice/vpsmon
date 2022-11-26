@@ -47,10 +47,12 @@ async def startup():
     aerich = Command(TORTOISE_ORM)
     await aerich.init()
     await aerich.upgrade()
-    await bot.start()
+    if not settings.DEBUG:
+        await bot.start()
 
 
 @app.on_event("shutdown")
 async def shutdown():
     await rearq.close()
-    await bot.stop()
+    if not settings.DEBUG:
+        await bot.stop()

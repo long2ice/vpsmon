@@ -12,7 +12,6 @@ class DMIT(Provider):
     name = "Dmit"
     homepage = "https://www.dmit.io"
     payments = [PayPal, AliPay, BankTransfer, CreditCard, Stripe]
-    datacenter_url = "https://walixz.com/dmit-speedtest.html"
     aff = 5324
     aff_url = f"{homepage}/aff.php?aff={aff}"
 
@@ -109,7 +108,7 @@ class DMIT(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("https://walixz.com/dmit-speedtest.html")
         table = r.html.find("table", first=True)
         datacenters = []
         for tr in table.find("tr"):

@@ -15,7 +15,6 @@ class RackNerd(Provider):
     name = "RackNerd"
     homepage = "https://www.racknerd.com"
     payments = [PayPal, CreditCard, AliPay, BTC]
-    datacenter_url = "https://www.racknerd.com/datacenters"
     aff = 5797
     aff_url = f"https://my.racknerd.com/aff.php?aff={aff}"
 
@@ -168,7 +167,7 @@ class RackNerd(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("https://www.racknerd.com/datacenters")
         box = r.html.find(".location-box")
         datacenters = []
         for b in box:

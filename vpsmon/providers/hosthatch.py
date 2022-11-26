@@ -22,7 +22,6 @@ class HostHatch(Provider):
         BTC,
         BankTransfer,
     ]
-    datacenter_url = f"{homepage}/features#datacenters"
     aff = 2932
     aff_url = f"https://cloud.hosthatch.com/a/{2932}"
 
@@ -101,7 +100,7 @@ class HostHatch(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get(f"{cls.homepage}/features#datacenters")
         table = r.html.find("table.datacenters", first=True)
         tasks = []
         for i, div in enumerate(table.find("tr")):

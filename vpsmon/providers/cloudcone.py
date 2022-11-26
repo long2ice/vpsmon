@@ -10,7 +10,6 @@ class CloudCone(Provider):
     name = "CloudCone"
     homepage = "https://cloudcone.com"
     payments = [PayPal, AliPay]
-    datacenter_url = "http://la.lg.cloudc.one"
     aff = 8503
     aff_url = f"https://app.cloudcone.com/?ref={aff}"
 
@@ -67,7 +66,7 @@ class CloudCone(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("http://la.lg.cloudc.one")
         p_list = r.html.find("#information p")
         name, location = p_list[0].find("b", first=True).text.split(", ")
         ipv4 = p_list[1].text.split(" ")[-1]

@@ -12,7 +12,6 @@ class BandwagonHost(Provider):
     name = "BandwagonHost"
     homepage = "https://bandwagonhost.com"
     payments = [PayPal, AliPay, UnionPay, CreditCard]
-    datacenter_url = "https://bhw81.net/datacenter.html"
     aff = 69285
     aff_url = f"https://bandwagonhost.com/aff.php?aff={aff}"
 
@@ -76,7 +75,7 @@ class BandwagonHost(Provider):
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
         session = cls._get_session()
-        r = await session.get(cls.datacenter_url)
+        r = await session.get("https://bhw81.net/datacenter.html")
         table = r.html.find("table", first=True)
         datacenters = []
         for tr in table.find("tr"):

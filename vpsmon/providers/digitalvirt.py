@@ -24,7 +24,6 @@ class DigitalVirt(Provider):
     payments = [WeChatPay]
     aff = 120
     aff_url = f"https://digitalvirt.com/aff.php?aff={aff}"
-    datacenter_url = aff_url
 
     @classmethod
     async def _get_vps_list(cls, url: str, category: str):
@@ -35,9 +34,7 @@ class DigitalVirt(Provider):
             for div in html.find("div.product-wrap-box"):  # type: ignore
                 name = div.find(".product-wrap-title", first=True).text
                 price = (
-                    div.find(".product-wrap-price .big", first=True)
-                    .text.replace("¥", "")
-                    .strip()
+                    div.find(".product-wrap-price .big", first=True).text.replace("¥", "").strip()
                 )
                 won = div.find(".product-wrap-price .won", first=True).text
                 period = "month"
@@ -107,24 +104,16 @@ class DigitalVirt(Provider):
     @classmethod
     async def get_vps_list(cls) -> list[VPS]:
         tasks = [
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/la-vps", "洛杉矶 9929")
-            ),
+            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/la-vps", "洛杉矶 9929")),
             asyncio.ensure_future(
                 cls._get_vps_list(f"{cls.homepage}/store/la-vps-4837", "洛杉矶 4837")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/qn-vps", "洛杉矶 QN")
-            ),
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/hk-cmi-vps", "香港 CMI")
-            ),
+            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/qn-vps", "洛杉矶 QN")),
+            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/hk-cmi-vps", "香港 CMI")),
             asyncio.ensure_future(
                 cls._get_vps_list(f"{cls.homepage}/store/la-vps-cn2gia", "洛杉矶 CN2 GIA")
             ),
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/jp-vps-bbetc", "日本软银")
-            ),
+            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/jp-vps-bbetc", "日本软银")),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
@@ -167,9 +156,7 @@ class DigitalVirt(Provider):
             asyncio.ensure_future(cls._get_datacenter_list("/la-vps-4837", "洛杉矶 4837")),
             asyncio.ensure_future(cls._get_datacenter_list("/qn-vps", "洛杉矶 QN")),
             asyncio.ensure_future(cls._get_datacenter_list("/hk-cmi-vps", "香港 CMI")),
-            asyncio.ensure_future(
-                cls._get_datacenter_list("/la-vps-cn2gia", "洛杉矶 CN2 GIA")
-            ),
+            asyncio.ensure_future(cls._get_datacenter_list("/la-vps-cn2gia", "洛杉矶 CN2 GIA")),
             asyncio.ensure_future(cls._get_datacenter_list("/jp-vps-bbetc", "日本软银")),
         ]
         datacenter_list = await asyncio.gather(*tasks)
