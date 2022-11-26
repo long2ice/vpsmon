@@ -12,6 +12,7 @@ class ProviderType(str, Enum):
     dmit = "dmit"
     vultr = "vultr"
     vps = "v.ps"
+    advinservers = "advinservers"
 
 
 class VPSPeriod(str, Enum):
