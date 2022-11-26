@@ -55,8 +55,8 @@ async def get_vps(
     if period:
         qs = qs.filter(period=period)
     total = await qs.count()
-    qs = qs.order_by("cpu", "memory", "disk").limit(limit).offset(offset)
-    return VPSRes(data=await qs, total=total)
+    data = await qs.order_by("cpu", "memory", "disk").limit(limit).offset(offset)
+    return VPSRes(data=data, total=total)
 
 
 class VPSLink(BaseModel):

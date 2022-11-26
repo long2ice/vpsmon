@@ -25,6 +25,8 @@ class VPS(Model):
     created_at = fields.DatetimeField(auto_now_add=True)
     updated_at = fields.DatetimeField(auto_now=True)
 
+    subscribers: fields.ReverseRelation["Subscriber"]
+
     class Meta:
         unique_together = [("provider", "category", "name")]
 
@@ -38,3 +40,12 @@ class DataCenter(Model):
 
     class Meta:
         unique_together = [("provider", "name")]
+
+
+class Subscriber(Model):
+    chat_id = fields.IntField()
+    vps: fields.ForeignKeyRelation[VPS] = fields.ForeignKeyField("models.VPS")
+    created_at = fields.DatetimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = [("vps_id", "chat_id")]

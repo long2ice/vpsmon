@@ -5,6 +5,7 @@ from rearq.server.app import app as rearq_server
 from tortoise.contrib.fastapi import register_tortoise
 from tortoise.exceptions import DoesNotExist
 
+from vpsmon import bot
 from vpsmon.exceptions import (
     custom_http_exception_handler,
     exception_handler,
@@ -46,8 +47,10 @@ async def startup():
     aerich = Command(TORTOISE_ORM)
     await aerich.init()
     await aerich.upgrade()
+    await bot.start()
 
 
 @app.on_event("shutdown")
 async def shutdown():
     await rearq.close()
+    await bot.stop()

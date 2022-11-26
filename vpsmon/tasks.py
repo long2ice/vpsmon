@@ -4,7 +4,7 @@ from tortoise import Tortoise
 
 from vpsmon.bot import send_new_vps
 from vpsmon.enums import ProviderType
-from vpsmon.models import VPS, DataCenter
+from vpsmon.models import VPS, DataCenter, Subscriber
 from vpsmon.settings import settings
 from vpsmon.utils import get_provider, get_providers
 
@@ -63,7 +63,7 @@ async def get_vps(type_: ProviderType):
         notify = False
         if instance:
             updated_count += 1
-            if instance.count == 0 and vps.count > 0:
+            if instance.count == 0 and (vps.count > 0 or vps.count == -1):
                 notify = True
             await instance.update_from_dict(defaults).save()
         else:
@@ -71,17 +71,32 @@ async def get_vps(type_: ProviderType):
                 provider=type_,
                 name=vps.name,
                 category=vps.category,
-                **defaults,
+                **defaults,  # type: ignore
             )
             notify = True
             created_count += 1
         if not settings.DEBUG and notify:
             try:
                 await send_new_vps(instance)
+                await notify_subscribers.delay(instance.pk)
             except Exception as e:
                 logger.exception(e)
 
     return {"created_count": created_count, "updated_count": updated_count}
+
+
+@rearq.task()
+async def notify_subscribers(pk: int):
+    subscribers = await Subscriber.filter(vps_id=pk).only("chat_id")
+    if not subscribers:
+        return
+    vps = await VPS.get(pk=pk)
+    for subscriber in subscribers:
+        try:
+            await send_new_vps(vps, subscriber.chat_id)
+        except Exception as e:
+            logger.exception(e)
+    return len(subscribers)
 
 
 @rearq.task(cron="*/10 * * * *")
