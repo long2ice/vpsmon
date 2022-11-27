@@ -6,7 +6,7 @@ from vpsmon.providers import Provider
 
 class CloudCone(Provider):
     type = ProviderType.cloudcone
-    icon = "https://app.cloudcone.com/assets/img/favicon.png"
+    icon = "/provider/cloudcone.png"
     name = "CloudCone"
     homepage = "https://cloudcone.com"
     payments = [PayPal, AliPay]

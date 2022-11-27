@@ -17,7 +17,7 @@ from vpsmon.providers import Provider
 
 class VPSHosting(Provider):
     type = ProviderType.vps
-    icon = "https://v.ps/favicon.ico"
+    icon = "/provider/vps.ico"
     name = "V.PS"
     homepage = "https://v.ps"
     payments = [AliPay, ETH, BTC, USDT, ApplePay, GooglePay, Stripe, BankTransfer]

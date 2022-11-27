@@ -10,9 +10,7 @@ from vpsmon.providers import Provider
 
 class AdvinServers(Provider):
     type = ProviderType.advinservers
-    icon = (
-        "https://clients.advinservers.com/templates/lagom2/assets/img/logo/logo_big.1606281981.png"
-    )
+    icon = "/provider/advinservers.png"
     name = "AdvinServers"
     homepage = "https://clients.advinservers.com"
     payments = [PayPal, Stripe, BTC, ETH]
@@ -103,7 +101,9 @@ class AdvinServers(Provider):
             if "KVM" not in category:
                 continue
             href = a.attrs["href"]
-            tasks.append(asyncio.ensure_future(cls._get_vps_list(cls.homepage + href, category)))
+            tasks.append(
+                asyncio.ensure_future(cls._get_vps_list(cls.homepage + href, category))
+            )
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
 

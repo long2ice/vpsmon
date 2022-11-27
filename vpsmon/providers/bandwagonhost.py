@@ -8,7 +8,7 @@ from vpsmon.providers import Provider
 
 class BandwagonHost(Provider):
     type = ProviderType.bandwagonhost
-    icon = "https://bandwagonhost.com/templates/organicbandwagon/images/logo.png"
+    icon = "/provider/bandwagonhost.png"
     name = "BandwagonHost"
     homepage = "https://bandwagonhost.com"
     payments = [PayPal, AliPay, UnionPay, CreditCard]

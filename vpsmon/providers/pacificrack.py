@@ -6,7 +6,7 @@ from vpsmon.providers import Provider
 
 class Pacificrack(Provider):
     type = ProviderType.pacificrack
-    icon = "https://pacificrack.com/img/favicon.png"
+    icon = "/provider/pacificrack.webp"
     name = "Pacificrack"
     homepage = "https://pacificrack.com"
     aff = 3951
@@ -62,7 +62,9 @@ class Pacificrack(Provider):
                 cpu=cpu,
                 memory=memory,
                 disk=disk,
-                disk_type=r.html.find(".plan-comparison-box", first=True).find("li")[2].text,
+                disk_type=r.html.find(".plan-comparison-box", first=True)
+                .find("li")[2]
+                .text,
                 speed=speed,
                 bandwidth=bandwidth,
                 ipv4=ipv4,

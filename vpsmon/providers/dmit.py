@@ -8,7 +8,7 @@ from vpsmon.providers import Provider
 
 class DMIT(Provider):
     type = ProviderType.dmit
-    icon = "https://www.dmit.io/favicon.ico"
+    icon = "/provider/dmit.ico"
     name = "Dmit"
     homepage = "https://www.dmit.io"
     payments = [PayPal, AliPay, BankTransfer, CreditCard, Stripe]

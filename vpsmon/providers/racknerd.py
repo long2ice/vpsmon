@@ -11,7 +11,7 @@ from vpsmon.providers import Provider, ProviderType
 
 class RackNerd(Provider):
     type = ProviderType.racknerd
-    icon = "https://www.racknerd.com/favicon.png"
+    icon = "/provider/racknerd.png"
     name = "RackNerd"
     homepage = "https://www.racknerd.com"
     payments = [PayPal, CreditCard, AliPay, BTC]
