@@ -33,9 +33,7 @@ class Vultr(Provider):
                     memory, memory_unit = pt__cell[1].text.split(" ")[0].split("\xa0")
                     if memory_unit == "GB":
                         memory = float(memory) * 1024
-                    bandwidth, bandwidth_unit = (
-                        pt__cell[2].text.split(" ")[0].split("\xa0")
-                    )
+                    bandwidth, bandwidth_unit = pt__cell[2].text.split(" ")[0].split("\xa0")
                     if bandwidth_unit == "TB":
                         bandwidth = float(bandwidth) * 1024
                     disk, disk_unit = pt__cell[3].text.split(" ")[0].split("\xa0")

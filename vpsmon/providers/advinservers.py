@@ -101,12 +101,27 @@ class AdvinServers(Provider):
             if "KVM" not in category:
                 continue
             href = a.attrs["href"]
-            tasks.append(
-                asyncio.ensure_future(cls._get_vps_list(cls.homepage + href, category))
-            )
+            tasks.append(asyncio.ensure_future(cls._get_vps_list(cls.homepage + href, category)))
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
 
     @classmethod
     async def get_datacenter_list(cls) -> list[DataCenter]:
-        return []
+        url = f"{cls.homepage}/knowledgebase/4/Test-IPv4-Addresses.html"
+        session = cls._get_session()
+        r = await session.get(url, timeout=cls.timeout)
+        ips = r.html.find("p")[1].text.split("\n")
+        datacenter_list = []
+        for ip in ips:
+            ip = ip.split("(")[0]
+            location, ipv4 = ip.split(":")
+            name, location = location.split(",")
+            datacenter_list.append(
+                DataCenter(
+                    provider=cls.type,
+                    name=name.strip(),
+                    location=location.strip(),
+                    ipv4=ipv4.strip(),
+                )
+            )
+        return datacenter_list
