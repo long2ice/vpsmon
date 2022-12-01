@@ -71,6 +71,8 @@ class DigitalVirt(Provider):
                         bandwidth, _ = bandwidth.split("/")
                     if bandwidth.endswith("T"):
                         bandwidth = float(re.findall(r"\d+", bandwidth)[0]) * 1024
+                    elif bandwidth == "无限制":
+                        bandwidth = -1
                     else:
                         bandwidth = float(re.findall(r"\d+", bandwidth)[0])
                 except (AttributeError, ValueError):
