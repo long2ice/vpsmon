@@ -66,7 +66,9 @@ async def unsubscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-subscribe_vps_template = "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
+subscribe_vps_template = (
+    "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
+)
 
 
 async def list_vps(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -94,18 +96,30 @@ async def list_vps(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = """
+    /subscribe ID 订阅VPS
+    /unsubscribe ID or all 取消订阅VPS
+    /list 列出所有已订阅VPS
+    /help 帮助
+    """
+    await update.message.reply_text(text)
+
+
 async def start():
     await bot.set_my_commands(
         [
-            BotCommand("subscribe", "订阅VPS，用法：/subscribe ID"),
-            BotCommand("unsubscribe", "取消订阅VPS，用法：/unsubscribe ID or all"),
+            BotCommand("subscribe", "订阅VPS"),
+            BotCommand("unsubscribe", "取消订阅VPS"),
             BotCommand("list", "列出所有已订阅VPS"),
+            BotCommand("help", "帮助"),
         ]
     )
 
     app.add_handler(CommandHandler("subscribe", subscribe))
     app.add_handler(CommandHandler("unsubscribe", unsubscribe))
     app.add_handler(CommandHandler("list", list_vps))
+    app.add_handler(CommandHandler("help", help_command))
 
     await app.initialize()
     await app.start()
