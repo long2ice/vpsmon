@@ -26,8 +26,9 @@ class DigitalVirt(Provider):
     aff_url = f"https://digitalvirt.com/aff.php?aff={aff}"
 
     @classmethod
-    async def _get_vps_list(cls, url: str, category: str):
+    async def _get_vps_list(cls, path: str, category: str):
         vps_list = []
+        url = f"{cls.homepage}/store{path}"
         async with httpx.AsyncClient(http2=True, timeout=cls.timeout) as client:
             res = await client.get(url)
             html = HTML(html=res.text)
@@ -46,9 +47,9 @@ class DigitalVirt(Provider):
                 cpu = re.findall(r"\d+", cpu)[0]
                 memory_text = lis[1].find("strong", first=True).text
                 if memory_text.endswith("GB"):
-                    memory = float(re.findall(r"\d+", memory_text)[0]) * 1024
+                    memory = float(memory_text.replace("GB", "").strip()) * 1024
                 else:
-                    memory = float(re.findall(r"\d+", memory_text)[0])
+                    memory = float(memory_text.replace("MB", "").strip())
                 try:
                     disk, disk_type = lis[2].find("strong", first=True).text.split(" ")
                 except ValueError:
@@ -106,17 +107,14 @@ class DigitalVirt(Provider):
     @classmethod
     async def get_vps_list(cls) -> list[VPS]:
         tasks = [
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/la-vps", "洛杉矶 9929")),
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/la-vps-4837", "洛杉矶 4837")
-            ),
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/qn-vps", "洛杉矶 QN")),
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/hk-cmi-vps", "香港 CMI")),
-            asyncio.ensure_future(
-                cls._get_vps_list(f"{cls.homepage}/store/la-vps-cn2gia", "洛杉矶 CN2 GIA")
-            ),
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/jp-vps-bbetc", "日本软银")),
-            asyncio.ensure_future(cls._get_vps_list(f"{cls.homepage}/store/sg-vps-bgp", "新加坡 BGP")),
+            asyncio.ensure_future(cls._get_vps_list("/la-vps", "洛杉矶 9929")),
+            asyncio.ensure_future(cls._get_vps_list("/la-vps-4837", "洛杉矶 4837")),
+            asyncio.ensure_future(cls._get_vps_list("/qn-vps", "洛杉矶 QN")),
+            asyncio.ensure_future(cls._get_vps_list("/hk-cmi-vps", "香港 CMI")),
+            asyncio.ensure_future(cls._get_vps_list("/la-vps-cn2gia", "洛杉矶 CN2 GIA")),
+            asyncio.ensure_future(cls._get_vps_list("/jp-vps-bbetc", "日本软银")),
+            asyncio.ensure_future(cls._get_vps_list("/sg-vps-bgp", "新加坡 BGP")),
+            asyncio.ensure_future(cls._get_vps_list("/lightvm-9929", "洛杉矶轻量")),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))
