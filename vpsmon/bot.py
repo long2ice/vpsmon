@@ -66,9 +66,7 @@ async def unsubscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-subscribe_vps_template = (
-    "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
-)
+subscribe_vps_template = "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
 
 
 async def list_vps(update: Update, context: ContextTypes.DEFAULT_TYPE):
