@@ -115,6 +115,7 @@ class DigitalVirt(Provider):
             asyncio.ensure_future(cls._get_vps_list("/jp-vps-bbetc", "日本软银")),
             asyncio.ensure_future(cls._get_vps_list("/sg-vps-bgp", "新加坡 BGP")),
             asyncio.ensure_future(cls._get_vps_list("/lightvm-9929", "洛杉矶轻量")),
+            asyncio.ensure_future(cls._get_vps_list("/la-vps-cmin2", "洛杉矶 CMIN2")),
         ]
         vps_list = await asyncio.gather(*tasks)
         return list(itertools.chain(*vps_list))

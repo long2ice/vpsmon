@@ -43,7 +43,7 @@ class DataCenter(Model):
 
 
 class Subscriber(Model):
-    chat_id = fields.IntField()
+    chat_id = fields.CharField(max_length=255)
     vps: fields.ForeignKeyRelation[VPS] = fields.ForeignKeyField("models.VPS")
     created_at = fields.DatetimeField(auto_now_add=True)
 

@@ -66,7 +66,9 @@ async def unsubscribe(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
 
-subscribe_vps_template = "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
+subscribe_vps_template = (
+    "VPS ID: {id}  供应商: {provider}  名称: {name}  地址：<a href='{link}'>点击查看</a>"
+)
 
 
 async def list_vps(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -149,7 +151,7 @@ vps_model = pydantic_model_creator(
 )
 
 
-async def send_new_vps(vps: VPS, chat_id: Optional[int] = None):
+async def send_new_vps(vps: VPS, chat_id: Optional[str] = None):
     async with bot:
         provider = get_provider(vps.provider)
         vps.provider = provider.name  # type: ignore
