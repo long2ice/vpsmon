@@ -348,7 +348,7 @@ s3 = ["aiobotocore"]
 type = "git"
 url = "https://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@github.com/fastapi-admin/fastapi-admin-pro.git"
 reference = "dev"
-resolved_reference = "2335028c737c77d9599dcf45d425bfd23df171ca"
+resolved_reference = "1bb37f97abcdfd7ad3e6d2419dfa5b0aa9d5eaab"
 
 [[package]]
 name = "h11"
@@ -883,7 +883,7 @@ postgres = ["asyncpg"]
 type = "git"
 url = "https://github.com/long2ice/rearq.git"
 reference = "dev"
-resolved_reference = "47d948389976c4f8512e55dfcb1d0226e938791a"
+resolved_reference = "e71a4cd924c05f4d8afe43729b93195079f5817e"
 
 [[package]]
 name = "redis"

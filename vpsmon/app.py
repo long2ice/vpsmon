@@ -49,6 +49,7 @@ async def startup():
     await aerich.upgrade()
     if not settings.DEBUG:
         await bot.start()
+    await rearq_server.start_worker(with_timer=True)
 
 
 @app.on_event("shutdown")
