@@ -109,7 +109,7 @@ class DigitalVirt(Provider):
         tasks = [
             asyncio.ensure_future(cls._get_vps_list("/la-vps", "洛杉矶 9929")),
             asyncio.ensure_future(cls._get_vps_list("/la-vps-4837", "洛杉矶 4837")),
-            asyncio.ensure_future(cls._get_vps_list("/qn-vps", "洛杉矶 QN")),
+            asyncio.ensure_future(cls._get_vps_list("/la-vps-bgp", "洛杉矶 BGP")),
             asyncio.ensure_future(cls._get_vps_list("/hk-cmi-vps", "香港 CMI")),
             asyncio.ensure_future(cls._get_vps_list("/la-vps-cn2gia", "洛杉矶 CN2 GIA")),
             asyncio.ensure_future(cls._get_vps_list("/jp-vps-bbetc", "日本软银")),
@@ -156,10 +156,12 @@ class DigitalVirt(Provider):
         tasks = [
             asyncio.ensure_future(cls._get_datacenter_list("/la-vps", "洛杉矶 9929")),
             asyncio.ensure_future(cls._get_datacenter_list("/la-vps-4837", "洛杉矶 4837")),
-            asyncio.ensure_future(cls._get_datacenter_list("/qn-vps", "洛杉矶 QN")),
+            asyncio.ensure_future(cls._get_datacenter_list("/la-vps-bgp", "洛杉矶 BGP")),
+            asyncio.ensure_future(cls._get_datacenter_list("/sg-vps-bgp", "新加坡 BGP")),
             asyncio.ensure_future(cls._get_datacenter_list("/hk-cmi-vps", "香港 CMI")),
             asyncio.ensure_future(cls._get_datacenter_list("/la-vps-cn2gia", "洛杉矶 CN2 GIA")),
             asyncio.ensure_future(cls._get_datacenter_list("/jp-vps-bbetc", "日本软银")),
+            asyncio.ensure_future(cls._get_datacenter_list("/la-vps-cmin2", "洛杉矶 CMIN2")),
         ]
         datacenter_list = await asyncio.gather(*tasks)
         return list(filter(None, datacenter_list))

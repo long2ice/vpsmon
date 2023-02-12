@@ -15,6 +15,7 @@ class AdvinServers(Provider):
     homepage = "https://clients.advinservers.com"
     payments = [PayPal, Stripe, BTC, ETH]
     datacenter_url = ""
+    enable = False
     aff = 226
     aff_url = f"https://clients.advinservers.com/aff.php?aff={aff}"
 
