@@ -14,6 +14,7 @@ class ProviderType(str, Enum):
     vps = "v.ps"
     advinservers = "advinservers"
     shockhosting = "shockhosting"
+    yecaoyun = "yecaoyun"
 
 
 class VPSPeriod(str, Enum):

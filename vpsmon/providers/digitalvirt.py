@@ -35,7 +35,10 @@ class DigitalVirt(Provider):
             for div in html.find("div.product-wrap-box"):  # type: ignore
                 name = div.find(".product-wrap-title", first=True).text
                 price = (
-                    div.find(".product-wrap-price .big", first=True).text.replace("¥", "").strip()
+                    div.find(".product-wrap-price .big", first=True)
+                    .text.replace("¥", "")
+                    .strip()
+                    .replace(",", "")
                 )
                 won = div.find(".product-wrap-price .won", first=True).text
                 period = "month"
